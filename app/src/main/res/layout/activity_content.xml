@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.ContentActivity">
+
+    <TextView
+        android:id="@+id/tv_line"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_above="@+id/content_rg"
+        android:layout_marginBottom="8dp"
+        android:background="#909090" />
+
+    <RadioGroup
+        android:id="@+id/content_rg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_content_zhinan"
+            style="@style/rb_content_style"
+            android:drawableTop="@drawable/zhinan_button_selector"
+            android:text="指南" />
+
+        <RadioButton
+            android:id="@+id/rb_content_remnen"
+            style="@style/rb_content_style"
+            android:drawableTop="@drawable/remen_button_selector"
+            android:text="热门" />
+
+        <RadioButton
+            android:id="@+id/rb_content_fenlei"
+            style="@style/rb_content_style"
+            android:drawableTop="@drawable/fenlei_button_selector"
+            android:text="分类" />
+
+        <RadioButton
+            android:id="@+id/rb_content_my"
+            style="@style/rb_content_style"
+            android:drawableTop="@drawable/my_button_selector"
+            android:text="我的" />
+    </RadioGroup>
+
+    <FrameLayout
+        android:id="@+id/content_fl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/tv_line"></FrameLayout>
+
+</RelativeLayout>
