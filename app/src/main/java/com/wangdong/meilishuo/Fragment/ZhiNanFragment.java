@@ -12,6 +12,12 @@ import android.view.ViewGroup;
 
 import com.wangdong.meilishuo.R;
 import com.wangdong.meilishuo.adapter.ZhiNanViewPageAdapter;
+import com.wangdong.meilishuo.http.HttpUtils;
+import com.wangdong.meilishuo.http.RequestCallBack;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +33,8 @@ import java.util.List;
 public class ZhiNanFragment extends BaseFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    public static final String TABLAYOUT_URL=
+            "http://api.liwushuo.com/v2/channels/preset?gender=1&generation=2";
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
@@ -35,7 +43,7 @@ public class ZhiNanFragment extends BaseFragment {
     private List<String> titleList;
     private ViewPager viewPager;
     private ZhiNanViewPageAdapter zhiNanViewPageAdapter;
-
+    private int fragmentCount=0;
     private OnFragmentInteractionListener mListener;
     private View contentView;
     private ArrayList<Fragment> fragmentList;
@@ -84,29 +92,48 @@ public class ZhiNanFragment extends BaseFragment {
     private void initData() {
         titleList=new ArrayList<>();
         fragmentList=new ArrayList<>();
-        fragmentList.add(jingxuanFragment.newInstance(null,null));
-        fragmentList.add(haitaoFragment.newInstance(null,null));
-        fragmentList.add(ZhangzhishiFragment.newInstance(null,null));
-        titleList.add("精选");
-        titleList.add("海淘");
-        titleList.add("涨姿势");
-        titleList.add("创意生活");
-        titleList.add("纪念日");
-        titleList.add("美食");
-        titleList.add("生日数码");
-        titleList.add("爱运动");
-        titleList.add("科技苑");
-        titleList.add("家居");
-        titleList.add("设计感");
-        titleList.add("礼物");
-        titleList.add("送基友");
-        titleList.add("送爸妈");
-        titleList.add("爱动漫");
-        titleList.add("送女票");
-        zhiNanViewPageAdapter=new ZhiNanViewPageAdapter(getFragmentManager(),titleList,fragmentList);
-        viewPager.setAdapter(zhiNanViewPageAdapter);
-        tabLayout.setupWithViewPager(viewPager);
+        fragmentList.add(jingxuanFragment.newInstance(null, null));
+            HttpUtils.requestGet(TABLAYOUT_URL, new RequestCallBack() {
+                @Override
+                public void onSuccess(String result, int requestCode) {
+                    doJson(result);
+                    for (int i=0;i<fragmentCount;i++){
+                        fragmentList.add(CommonFragment.newInstance(null,null));
+                    }
+                    zhiNanViewPageAdapter = new ZhiNanViewPageAdapter(getFragmentManager(), titleList, fragmentList);
+                    viewPager.setAdapter(zhiNanViewPageAdapter);
+                    tabLayout.setupWithViewPager(viewPager);
+                }
+
+                @Override
+                public void onFailure(String error) {
+
+                }
+
+                @Override
+                public void error(Exception ex) {
+
+                }
+            }, 100);
+
     }
+
+    private void doJson(String result) {
+        try {
+            JSONObject jsonObject=new JSONObject(result);
+            JSONObject dataObject=jsonObject.getJSONObject("data");
+            JSONArray arrays=dataObject.getJSONArray("channels");
+            fragmentCount=arrays.length();
+            for (int i=0;i<fragmentCount;i++){
+                JSONObject object=arrays.getJSONObject(i);
+                titleList.add(object.getString("name"));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     private void initView() {
         tabLayout= (TabLayout) contentView.findViewById(R.id.tl_zhinan);
         viewPager= (ViewPager) contentView.findViewById(R.id.vp_zhinan);

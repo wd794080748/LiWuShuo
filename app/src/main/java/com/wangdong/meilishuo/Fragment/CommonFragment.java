@@ -13,12 +13,12 @@ import com.wangdong.meilishuo.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link haitaoFragment.OnFragmentInteractionListener} interface
+ * {@link CommonFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link haitaoFragment#newInstance} factory method to
+ * Use the {@link CommonFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class haitaoFragment extends BaseFragment {
+public class CommonFragment extends BaseFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,7 +30,7 @@ public class haitaoFragment extends BaseFragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public haitaoFragment() {
+    public CommonFragment() {
         // Required empty public constructor
     }
 
@@ -40,11 +40,11 @@ public class haitaoFragment extends BaseFragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment haitaoFragment.
+     * @return A new instance of fragment CommonFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static haitaoFragment newInstance(String param1, String param2) {
-        haitaoFragment fragment = new haitaoFragment();
+    public static CommonFragment newInstance(String param1, String param2) {
+        CommonFragment fragment = new CommonFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -65,7 +65,7 @@ public class haitaoFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_haitao, container, false);
+        return inflater.inflate(R.layout.fragment_common, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -78,7 +78,6 @@ public class haitaoFragment extends BaseFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
     }
 
     @Override
@@ -97,4 +96,5 @@ public class haitaoFragment extends BaseFragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
+
 }
